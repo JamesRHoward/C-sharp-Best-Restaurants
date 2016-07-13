@@ -112,7 +112,7 @@ namespace BestRestaurants
       cmd.Parameters.Add(newCuisineParameter);
 
       SqlParameter categoryIdParameter = new SqlParameter();
-      categoryIdParameter.ParameterName = "@CategoryId";
+      categoryIdParameter.ParameterName = "@CuisineId";
       categoryIdParameter.Value = this.GetId();
       cmd.Parameters.Add(categoryIdParameter);
       rdr = cmd.ExecuteReader();

@@ -43,6 +43,23 @@ namespace BestRestaurants
 
       Assert.Equal(testList, result);
     }
+    [Fact]
+    public void Test_Update_UpdatesCuisineInDatabase()
+    {
+      //Arrange
+      string cuisineName = "Burgurs";
+      Cuisine testCuisine = new Cuisine(cuisineName);
+      testCuisine.SaveCuisineName();
+      string newCuisineName = "Burgers";
+
+      //Act
+      testCuisine.Update(newCuisineName);
+
+      string result = testCuisine.GetCuisineName();
+
+      //Assert
+      Assert.Equal(newCuisineName, result);
+    }
 
     // [Fact]
     // public void Test_Equal_FindCuisineById()
