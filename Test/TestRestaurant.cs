@@ -33,6 +33,33 @@ namespace BestRestaurants
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_Update_UpdatesRestaurantInDatabase()
+    {
+      //Arrange
+      string name = "Dirty Steve's";
+      Restaurant TestRestaurant = new Restaurant(name, "123 main str", "blah", 1);
+      TestRestaurant.Save();
+      string newName = "Filthy Steve's";
+
+      //Act
+      TestRestaurant.Update(newName);
+
+      string result = TestRestaurant.GetRestaurantName();
+
+      //Assert
+      Assert.Equal(newName, result);
+    }
+
+    [Fact]
+    public void Test_Find_FindsRestaurantInDatabase()
+    {
+      Restaurant newRestaurant = new Restaurant("Dirty Steve's", "123 Main St", "It's pretty dirty!", 4);
+      newRestaurant.Save();
+      Restaurant foundRestaurant = Restaurant.Find(newRestaurant.GetId());
+      Assert.Equal(newRestaurant, foundRestaurant);
+    }
+
 
     public void Dispose()
     {
