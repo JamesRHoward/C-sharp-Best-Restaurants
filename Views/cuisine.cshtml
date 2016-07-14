@@ -1,0 +1,12 @@
+<h1>@Model["cuisine"].GetCuisineName()</h1>
+
+<p>Here are all of the restaurants that serve this type of cuisine:</p>
+
+<ul>
+@foreach (var restaurant in Model["restaurants"])
+{
+  <li><a href="/restaurant/@restaurant.GetId()">@restaurant.GetRestaurantName()</a></li>
+}
+</ul>
+
+<a href="/">Back to home page</a>

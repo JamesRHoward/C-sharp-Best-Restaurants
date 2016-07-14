@@ -42,6 +42,14 @@ namespace BestRestaurants
         Model.Add("cuisine", foundCuisine);
         return View["restaurant.cshtml", Model];
       };
+      Get["cuisine/{id}"] = Parameters => {
+        Dictionary<string, object> Model = new Dictionary<string, object>();
+        var foundCuisine = Cuisine.Find(Parameters.id);
+        var foundRestaurants = foundCuisine.GetRestaurant();
+        Model.Add("cuisine", foundCuisine);
+        Model.Add("restaurants", foundRestaurants);
+        return View["cuisine.cshtml", Model];
+      };
     }
   }
 }
