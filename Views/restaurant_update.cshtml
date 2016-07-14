@@ -1,7 +1,7 @@
-<h2>Update @Model.GetRestaurantName()</h2>
+<h2>Update @Model["restaurant"].GetRestaurantName()</h2>
 <p>Enter your updates below:</p>
 
-<form action="/restaurant/new" method="post">
+<form action="/restaurant/update/@Model["restaurant"].GetId()" method="post">
   <input type="hidden" name="_method" value="PATCH">
   <label for="restaurant_name">Restaurant Name: </label>
   <input type="text" name="restaurant_name" id="restaurant_name">
@@ -10,7 +10,7 @@
   <label for="restaurant_description">Description: </label>
   <input type="text" name="restaurant_description" id="restaurant_description">
   <select name="cuisine_id">
-    @foreach (var cuisine in Model)
+    @foreach (var cuisine in Model["cuisine"])
     {
       <option value ="@cuisine.GetId()">@cuisine.GetCuisineName()</option>
     }

@@ -69,8 +69,12 @@ namespace BestRestaurants
         return View["success.cshtml"];
       };
       Get["restaurant/update/{id}"] = parameters => {
-        Restaurant selectedRestaurant = Restaurant.Find(parameters.id);
-        return View["restaurant_update.cshtml", selectedRestaurant];
+        Dictionary<string, object> Model = new Dictionary<string, object>();
+        var foundRestaurant = Restaurant.Find(parameters.id);
+        List<Cuisine> allCuisines = Cuisine.GetAll();
+        Model.Add("restaurant", foundRestaurant);
+        Model.Add("cuisine", allCuisines);
+        return View["restaurant_update.cshtml", Model];
       };
       Patch["restaurant/update/{id}"] = parameters => {
         Restaurant selectedRestaurant = Restaurant.Find(parameters.id);
