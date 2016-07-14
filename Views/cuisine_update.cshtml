@@ -1,0 +1,11 @@
+<h2>Update @Model.GetCuisineName()</h2>
+<p>Enter your updates below:</p>
+
+<form action="/cuisine/update/@Model.GetId()" method="post">
+<input type="hidden" name="_method" value="PATCH">
+<label for="cuisine_name">Name of Cuisine: </label>
+<input type="text" name="cuisine_name" id="cuisine_name" min=1 autofocus="" placeholder="Enter a cuisine">
+<button type="submit" name="button">Submit</button>
+</form>
+
+<a href="/">Back to Home</a>
