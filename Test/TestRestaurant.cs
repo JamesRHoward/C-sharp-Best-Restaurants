@@ -86,8 +86,6 @@ namespace BestRestaurants
       newRestaurant.Delete();
       testRestaurants.Remove(newRestaurant);
       List<Restaurant> resultRestaurants = Restaurant.GetAll();
-      Console.WriteLine("testRestaurants is a " + testRestaurants.GetType());
-      Console.WriteLine("newRestaurant is a " + newRestaurant.GetType());
       Assert.Equal(testRestaurants, resultRestaurants);
     }
 

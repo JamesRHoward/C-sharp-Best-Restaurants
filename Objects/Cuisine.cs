@@ -107,7 +107,7 @@ namespace BestRestaurants
       return allCuisines;
     }
 
-    public void SaveCuisineName()
+    public void Save()
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr;
@@ -162,6 +162,26 @@ namespace BestRestaurants
       {
         rdr.Close();
       }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM cuisines WHERE id = @CuisineId; DELETE FROM restaurants WHERE cuisine_id = @CuisineId;", conn);
+
+      SqlParameter cuisineIdParameter = new SqlParameter();
+      cuisineIdParameter.ParameterName = "@CuisineId";
+      cuisineIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(cuisineIdParameter);
+      cmd.ExecuteNonQuery();
 
       if (conn != null)
       {

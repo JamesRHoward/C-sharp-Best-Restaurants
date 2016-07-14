@@ -30,10 +30,10 @@ namespace BestRestaurants
     }
 
     [Fact]
-    public void Test_SaveCuisineName_SavesToDatabase()
+    public void Test_Save_SavesToDatabase()
     {
       Cuisine testCuisine = new Cuisine("Burgers");
-      testCuisine.SaveCuisineName();
+      testCuisine.Save();
 
       List<Cuisine> testList = new List<Cuisine>{testCuisine};
       List<Cuisine> result = Cuisine.GetAll();
@@ -49,7 +49,7 @@ namespace BestRestaurants
       //Arrange
       string cuisineName = "Burgurs";
       Cuisine testCuisine = new Cuisine(cuisineName);
-      testCuisine.SaveCuisineName();
+      testCuisine.Save();
       string newCuisineName = "Burgers";
 
       //Act
@@ -59,6 +59,32 @@ namespace BestRestaurants
 
       //Assert
       Assert.Equal(newCuisineName, result);
+    }
+    [Fact]
+    public void Test_Delete_RemovesCuisineFromDatabase()
+    {
+      List<Cuisine> TestCuisines = new List<Cuisine>{};
+
+      Cuisine testCuisine1 = new Cuisine("Greek");
+      testCuisine1.Save();
+      Cuisine testCuisine2 = new Cuisine("Japanese");
+      testCuisine2.Save();
+
+      Restaurant TestRestaurant1 = new Restaurant("Fred's", "123 Main St", "Delicious!", testCuisine1.GetId());
+      TestRestaurant1.Save();
+      Restaurant TestRestaurant2 = new Restaurant("Bill's", "123 Main St", "Delicious!", testCuisine2.GetId());
+      TestRestaurant2.Save();
+
+      testCuisine1.Delete();
+
+      List<Cuisine> resultCuisines = Cuisine.GetAll();
+      List<Cuisine> testCuisines = new List<Cuisine> {testCuisine2};
+
+      List<Restaurant> resultRestaurants = Restaurant.GetAll();
+      List<Restaurant> testRestaurants = new List<Restaurant> {TestRestaurant2};
+
+      Assert.Equal(resultCuisines, testCuisines);
+      Assert.Equal(resultRestaurants, testRestaurants);
     }
 
     // [Fact]

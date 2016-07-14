@@ -17,7 +17,7 @@ namespace BestRestaurants
       };
       Post["/cuisine/new"] = _ => {
         Cuisine newCuisine = new Cuisine(Request.Form["cuisine_name"]);
-        newCuisine.SaveCuisineName();
+        newCuisine.Save();
         List<Cuisine> allCuisines = Cuisine.GetAll();
         return View["index.cshtml", allCuisines];
       };
