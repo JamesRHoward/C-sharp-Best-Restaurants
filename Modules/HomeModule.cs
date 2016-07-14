@@ -26,14 +26,21 @@ namespace BestRestaurants
         return View["restaurant_form.cshtml", allCuisines];
       };
       Post["/restaurant/new"] = _ => {
-        Restaurant newRestaurant = new Restaurant(Request.Form["restaurant_name"], Request.Form["restaurant_location"], Request.Form["restaurant_description"], Request.Form["restaurant_cuisine"]);
+        Restaurant newRestaurant = new Restaurant(Request.Form["restaurant_name"], Request.Form["restaurant_location"], Request.Form["restaurant_description"], Request.Form["cuisine_id"]);
         newRestaurant.Save();
-        List<Cuisine> allCuisines = Cuisine.GetAll();
-        return View["index.cshtml", allCuisines];
+        return View["success.cshtml"];
       };
-      Get["/restaurants"] = _ => {
+      Get["/restaurant/all"] = _ => {
         List<Restaurant> allRestaurants = Restaurant.GetAll();
         return View["restaurants.cshtml", allRestaurants];
+      };
+      Get["restaurant/{id}"] = Parameters => {
+        Dictionary<string, object> Model = new Dictionary<string, object>();
+        var foundRestaurant = Restaurant.Find(Parameters.id);
+        var foundCuisine = Cuisine.Find(foundRestaurant.GetCuisineId());
+        Model.Add("restaurant", foundRestaurant);
+        Model.Add("cuisine", foundCuisine);
+        return View["restaurant.cshtml", Model];
       };
     }
   }

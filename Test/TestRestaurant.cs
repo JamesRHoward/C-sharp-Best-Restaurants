@@ -60,6 +60,37 @@ namespace BestRestaurants
       Assert.Equal(newRestaurant, foundRestaurant);
     }
 
+    [Fact]
+    public void Test_Delete_SingleRestaurantDeletedFromDatabase()
+    {
+      List<Restaurant> testRestaurants = new List<Restaurant> {};
+      Restaurant newRestaurant = new Restaurant("Dirty Steve's", "123 Main St", "It's pretty dirty!", 4);
+      newRestaurant.Save();
+      newRestaurant.Delete();
+      List<Restaurant> resultRestaurants = Restaurant.GetAll();
+      Assert.Equal(testRestaurants, resultRestaurants);
+    }
+
+    [Fact]
+    public void Test_Delete_SingleRestaurantDeletedFromTwoRestaurantsInDatabase()
+    {
+      List<Restaurant> testRestaurants = new List<Restaurant> {};
+      Restaurant newRestaurant = new Restaurant("Dirty Steve's", "123 Main St", "It's pretty dirty!", 4);
+      testRestaurants.Add(newRestaurant);
+      newRestaurant.Save();
+
+      Restaurant newRestaurantTwo = new Restaurant("Dirty Daves's", "1234 Main St", "It's pretty dave!", 4);
+      testRestaurants.Add(newRestaurantTwo);
+      newRestaurantTwo.Save();
+
+      newRestaurant.Delete();
+      testRestaurants.Remove(newRestaurant);
+      List<Restaurant> resultRestaurants = Restaurant.GetAll();
+      Console.WriteLine("testRestaurants is a " + testRestaurants.GetType());
+      Console.WriteLine("newRestaurant is a " + newRestaurant.GetType());
+      Assert.Equal(testRestaurants, resultRestaurants);
+    }
+
 
     public void Dispose()
     {

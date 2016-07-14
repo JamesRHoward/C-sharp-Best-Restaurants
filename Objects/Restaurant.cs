@@ -200,6 +200,26 @@ namespace BestRestaurants
       return foundRestaurant;
     }
 
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM restaurants WHERE id = @RestaurantId", conn);
+
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@RestaurantId";
+      restaurantIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(restaurantIdParameter);
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
@@ -207,6 +227,7 @@ namespace BestRestaurants
       SqlCommand cmd = new SqlCommand ("DELETE FROM restaurants;", conn);
       cmd.ExecuteNonQuery();
     }
+
     public void Update(string newRestaurantName)
     {
       SqlConnection conn = DB.Connection();
