@@ -2,11 +2,11 @@
 
 <form action="/restaurant/new" method="post">
   <label for="restaurant_name">Restaurant Name: </label>
-  <input type="text" name="restaurant_name" id="restaurant_name">
+  <input type="text" name="restaurant_name" id="restaurant_name" required>
   <label for="restaurant_location">Location: </label>
-  <input type="text" name="restaurant_location" id="restaurant_location">
+  <input type="text" name="restaurant_location" id="restaurant_location" required>
   <label for="restaurant_description">Description: </label>
-  <input type="text" name="restaurant_description" id="restaurant_description">
+  <input type="text" name="restaurant_description" id="restaurant_description" required>
   <select name="cuisine_id">
     @foreach (var cuisine in Model)
     {

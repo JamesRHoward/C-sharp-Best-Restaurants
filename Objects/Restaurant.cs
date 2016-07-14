@@ -233,6 +233,22 @@ namespace BestRestaurants
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr;
       conn.Open();
+      if (newRestaurantName == "")
+      {
+        newRestaurantName = this._restaurantName;
+      }
+      if (newLocation == "")
+      {
+        newLocation = this._location;
+      }
+      if (newDescription == "")
+      {
+        newDescription = this._description;
+      }
+      if (newCuisineId == null)
+      {
+        newCuisineId = this._cuisineId;
+      }
 
       SqlCommand cmd = new SqlCommand("UPDATE restaurants SET restaurant = @newRestaurantName, location = @newLocation, description = @newDescription, cuisine_id = @newCuisineId OUTPUT INSERTED.restaurant, INSERTED.location, INSERTED.description, INSERTED.cuisine_id WHERE id = @restaurantId;", conn);
 
