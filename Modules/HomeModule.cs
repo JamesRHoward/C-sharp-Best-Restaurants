@@ -68,6 +68,15 @@ namespace BestRestaurants
         selectedCuisine.Delete();
         return View["success.cshtml"];
       };
+      Get["restaurant/update/{id}"] = parameters => {
+        Restaurant selectedRestaurant = Restaurant.Find(parameters.id);
+        return View["restaurant_update.cshtml", selectedRestaurant];
+      };
+      Patch["restaurant/update/{id}"] = parameters => {
+        Restaurant selectedRestaurant = Restaurant.Find(parameters.id);
+        selectedRestaurant.Update(Request.Form["restaurant_name"], Request.Form["restaurant_location"], Request.Form["restaurant_description"], Request.Form["cuisine_id"]);
+        return View["success.cshtml"];
+      };
     }
   }
 }

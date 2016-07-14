@@ -37,18 +37,16 @@ namespace BestRestaurants
     public void Test_Update_UpdatesRestaurantInDatabase()
     {
       //Arrange
-      string name = "Dirty Steve's";
-      Restaurant TestRestaurant = new Restaurant(name, "123 main str", "blah", 1);
+      Restaurant TestRestaurant = new Restaurant("Dirty Steve's", "123 main str", "blah", 1);
       TestRestaurant.Save();
-      string newName = "Filthy Steve's";
 
       //Act
-      TestRestaurant.Update(newName);
+      TestRestaurant.Update("Filthy Steve's", "123 main str", "blah", 1);
 
       string result = TestRestaurant.GetRestaurantName();
 
       //Assert
-      Assert.Equal(newName, result);
+      Assert.Equal("Filthy Steve's", result);
     }
 
     [Fact]

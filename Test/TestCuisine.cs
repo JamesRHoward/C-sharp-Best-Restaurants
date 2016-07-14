@@ -97,7 +97,7 @@ namespace BestRestaurants
 
     public void Dispose()
     {
-      // Task.DeleteAll();
+      Restaurant.DeleteAll();
       Cuisine.DeleteAllCuisines();
     }
   }

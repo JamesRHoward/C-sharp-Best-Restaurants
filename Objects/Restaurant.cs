@@ -228,28 +228,48 @@ namespace BestRestaurants
       cmd.ExecuteNonQuery();
     }
 
-    public void Update(string newRestaurantName)
+    public void Update(string newRestaurantName, string newLocation, string newDescription, int newCuisineId)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE restaurants SET restaurant = @newRestaurantName OUTPUT INSERTED.restaurant WHERE id = @restaurantId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE restaurants SET restaurant = @newRestaurantName, location = @newLocation, description = @newDescription, cuisine_id = @newCuisineId OUTPUT INSERTED.restaurant, INSERTED.location, INSERTED.description, INSERTED.cuisine_id WHERE id = @restaurantId;", conn);
 
       SqlParameter newRestaurantNameParameter = new SqlParameter();
       newRestaurantNameParameter.ParameterName = "@newRestaurantName";
       newRestaurantNameParameter.Value = newRestaurantName;
 
+      SqlParameter newLocationParameter = new SqlParameter();
+      newLocationParameter.ParameterName = "@newLocation";
+      newLocationParameter.Value = newLocation;
+
+      SqlParameter newDescriptionParameter = new SqlParameter();
+      newDescriptionParameter.ParameterName = "@newDescription";
+      newDescriptionParameter.Value = newDescription;
+
+      SqlParameter newCuisineIdParameter = new SqlParameter();
+      newCuisineIdParameter.ParameterName = "@newCuisineId";
+      newCuisineIdParameter.Value = newCuisineId;
+
       SqlParameter restaurantIdParameter = new SqlParameter();
       restaurantIdParameter.ParameterName = "@restaurantId";
       restaurantIdParameter.Value = this.GetId();
+
       cmd.Parameters.Add(newRestaurantNameParameter);
+      cmd.Parameters.Add(newLocationParameter);
+      cmd.Parameters.Add(newDescriptionParameter);
+      cmd.Parameters.Add(newCuisineIdParameter);
       cmd.Parameters.Add(restaurantIdParameter);
+
       rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
         this._restaurantName = rdr.GetString(0);
+        this._location = rdr.GetString(1);
+        this._description = rdr.GetString(2);
+        this._cuisineId = rdr.GetInt32(3);
       }
 
       if (rdr != null)
