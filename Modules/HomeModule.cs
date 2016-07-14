@@ -34,21 +34,30 @@ namespace BestRestaurants
         List<Restaurant> allRestaurants = Restaurant.GetAll();
         return View["restaurants.cshtml", allRestaurants];
       };
-      Get["restaurant/{id}"] = Parameters => {
+      Get["restaurant/{id}"] = parameters => {
         Dictionary<string, object> Model = new Dictionary<string, object>();
-        var foundRestaurant = Restaurant.Find(Parameters.id);
+        var foundRestaurant = Restaurant.Find(parameters.id);
         var foundCuisine = Cuisine.Find(foundRestaurant.GetCuisineId());
         Model.Add("restaurant", foundRestaurant);
         Model.Add("cuisine", foundCuisine);
         return View["restaurant.cshtml", Model];
       };
-      Get["cuisine/{id}"] = Parameters => {
+      Get["cuisine/{id}"] = parameters => {
         Dictionary<string, object> Model = new Dictionary<string, object>();
-        var foundCuisine = Cuisine.Find(Parameters.id);
+        var foundCuisine = Cuisine.Find(parameters.id);
         var foundRestaurants = foundCuisine.GetRestaurant();
         Model.Add("cuisine", foundCuisine);
         Model.Add("restaurants", foundRestaurants);
         return View["cuisine.cshtml", Model];
+      };
+      Get["restaurant/delete/{id}"] = parameters => {
+        Restaurant selectedRestaurant = Restaurant.Find(parameters.id);
+        return View["restaurant_delete.cshtml", selectedRestaurant];
+      };
+      Delete["restaurant/delete/{id}"] = parameters => {
+        Restaurant selectedRestaurant = Restaurant.Find(parameters.id);
+        selectedRestaurant.Delete();
+        return View["success.cshtml"];
       };
     }
   }
